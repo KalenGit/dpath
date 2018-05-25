@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">D-Path</string>
+    <string name="d_path">D-Path</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="field_required_error">This field is required</string>
+    <string name="password_length_error">Password must be at least 6 characters</string>
+    <string name="invalid_email_error">Email is invalid</string>
+    <string name="auth_fail_message">Sign in failed</string>
+</resources>
