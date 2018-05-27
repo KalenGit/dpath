@@ -9,4 +9,7 @@
     <string name="password_length_error">Password must be at least 6 characters</string>
     <string name="invalid_email_error">Email is invalid</string>
     <string name="auth_fail_message">Sign in failed</string>
+    <string name="title_courses">Courses</string>
+    <string name="title_saved">Saved</string>
+    <string name="title_profile">Profile</string>
 </resources>

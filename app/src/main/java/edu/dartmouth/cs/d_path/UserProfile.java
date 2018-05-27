@@ -5,7 +5,7 @@ package edu.dartmouth.cs.d_path;
  */
 
 public class UserProfile {
-    private Long id;
+    private String id;
     private String mMajor;
     private String mEmail;
 
@@ -25,11 +25,11 @@ public class UserProfile {
         this.mEmail = mEmail;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 }

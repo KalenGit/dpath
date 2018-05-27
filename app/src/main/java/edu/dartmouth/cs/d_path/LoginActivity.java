@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in automatically go to main activity
         FirebaseUser currentUser = mAuth.getCurrentUser();
-//        updateUI(currentUser);
+        updateUI(currentUser);
     }
 
     public void updateUI(FirebaseUser user){
@@ -80,8 +80,8 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "SIGN IN SUCCESS");
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                             //if login is unsuccessful
                         } else {

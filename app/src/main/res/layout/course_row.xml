@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="300dp"
+    android:id="@+id/course_row"
+    android:layout_height="100dp"
+    android:orientation="horizontal"
+    android:background="@color/white"
+    android:layout_marginTop="50dp"
+    android:layout_marginLeft="50dp"
+    android:gravity="center">
+    
+    <TextView
+        android:id="@+id/course_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="50dp"
+        android:text="text"/>
+    <TextView
+        android:id="@+id/course_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="test"
+        />
+
+</LinearLayout>

@@ -107,10 +107,10 @@ public class RegisterActivity extends AppCompatActivity {
                                 //if successful add data to userProfile
                                 newUser.setEmail(etEmail.getText().toString());
                                 newUser.setMajor(majorSpinner.getSelectedItem().toString());
-                                newUser.setId(System.currentTimeMillis());
+                                newUser.setId(task.getResult().getUser().getUid().toString());
 
                                 //add data to firebase
-                                mFirebaseDatabase.getReference().child("user_" + newUser.getId())
+                                mFirebaseDatabase.getReference().child("Users").child("user_" + newUser.getId())
                                         .setValue(newUser)
                                         .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<Void>() {
                                             @Override
