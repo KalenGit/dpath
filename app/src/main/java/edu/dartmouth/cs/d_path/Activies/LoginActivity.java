@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     Button btRegister;
     private FirebaseAuth mAuth;
 
-    public static HashMap<String, Course> courseTable;
+    public static HashMap<String, Course> courseTable = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +58,11 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+        addCourses();
 
         // Check if user is signed in automatically go to main activity
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+//        updateUI(currentUser);
     }
 
     public void updateUI(FirebaseUser user){
@@ -99,6 +100,26 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG, "SIGN IN FAIL");
                             Toast.makeText(LoginActivity.this, getString(R.string.auth_fail_message), Toast.LENGTH_SHORT).show();
                         }
+                    }
+                });
+    }
+    public void addCourses(){
+        System.out.println("here");
+        FirebaseDatabase
+                .getInstance()
+                .getReference("Courses")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot data : dataSnapshot.getChildren()){
+                            Course course = data.getValue(Course.class);
+                            courseTable.put(course.getCourseNumber().replace(".", "-"), course);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
                     }
                 });
     }

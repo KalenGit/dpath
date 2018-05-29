@@ -68,19 +68,16 @@ public class CoursesFragment extends Fragment {
             //get course and put into arraylist
             String courseNumber = dataSnapshot.getValue(String.class);
 
-            Course course = ((AllCoursesFragment)
-                    ((MainActivity)getContext())
-                            .fragments.get(0))
-                    .allCourses.get(courseNumber);
+            Course course = LoginActivity.courseTable.get(courseNumber);
 
             if (firstCourses.size()<5){
                 firstCourses.add(course);
+//                mAdapter.notifyItemInserted(courses.size()-1);
 
             }else {
                 courses.add(course);
 //            Course course = dataSnapshot.getValue(Course.class);
 //            courses.add(course);
-//            mAdapter.notifyItemInserted(courses.size()-1);
             }
 
         }
@@ -133,7 +130,7 @@ public class CoursesFragment extends Fragment {
 
 
         // specify an adapter (see also next example)
-        mAdapter = new CourseAdapter(this.getActivity(), courses); // change this back to firstcourses
+        mAdapter = new CourseAdapter(this.getActivity(), firstCourses); // change this back to firstcourses
         mRecyclerView.setAdapter(mAdapter);
 
 //        // attach swipe controller to recycler view

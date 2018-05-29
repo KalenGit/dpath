@@ -131,8 +131,10 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder,int position) {
         Course currentCourse = courses.get(position);
-        holder.title.setText(currentCourse.title);
-        holder.number.setText(currentCourse.courseNumber);
+        if (courses.get(position)!=null) {
+            holder.title.setText(currentCourse.title);
+            holder.number.setText(currentCourse.courseNumber);
+        }
         Log.d(TAG, "onBind");
 
         changeColor(holder, currentCourse);
