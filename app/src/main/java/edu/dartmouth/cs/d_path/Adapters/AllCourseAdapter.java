@@ -75,7 +75,10 @@ public class AllCourseAdapter extends RecyclerView.Adapter<AllCourseAdapter.View
                 public void onClick(View view){
                     Toast.makeText(view.getContext(), "SAVE at "+ getAdapterPosition(), Toast.LENGTH_SHORT).show();
                     FirebaseDatabase.getInstance().getReference().child("Users")
-                            .child("user_" + FirebaseAuth.getInstance().getUid()).child("saved").child(courses.get(getAdapterPosition()).courseNumber).setValue(courses.get(getAdapterPosition()));
+                            .child("user_" + FirebaseAuth.getInstance().getUid()).child("saved")
+                            .child(courses.get(getAdapterPosition()).getCourseNumber()
+                                    .replace(".","-"))
+                            .setValue(courses.get(getAdapterPosition()).getCourseNumber().replace(".","-"));
                 }
             });
 
@@ -126,6 +129,7 @@ public class AllCourseAdapter extends RecyclerView.Adapter<AllCourseAdapter.View
             } else {
                 holder.number.setBackground(ContextCompat.getDrawable(context, R.drawable.recycler_shape2));
             }
+            holder.number.setTextColor(ContextCompat.getColor(context, R.color.darkGreen));
             holder.title.setTextColor(ContextCompat.getColor(context, R.color.darkGreen));
         } else if (courseTitle.equals("BIOL")){
             if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {

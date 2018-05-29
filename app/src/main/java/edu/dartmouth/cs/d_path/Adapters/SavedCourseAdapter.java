@@ -69,7 +69,7 @@ public class SavedCourseAdapter extends RecyclerView.Adapter<SavedCourseAdapter.
                     DatabaseReference ref;
                     ref = FirebaseDatabase.getInstance().getReference("Users").child("user_"+ FirebaseAuth.getInstance().getUid()).child("saved");
                     Log.d(TAG, courses.get(getAdapterPosition()).courseNumber);
-                    ref.child(courses.get(getAdapterPosition()).courseNumber).removeValue();
+                    ref.child(courses.get(getAdapterPosition()).courseNumber.replace(".","-")).removeValue();
                     delete(getAdapterPosition());
 
                 }
@@ -119,6 +119,7 @@ public class SavedCourseAdapter extends RecyclerView.Adapter<SavedCourseAdapter.
             } else {
                 holder.number.setBackground(ContextCompat.getDrawable(context, R.drawable.recycler_shape2));
             }
+            holder.number.setTextColor(ContextCompat.getColor(context, R.color.darkGreen));
             holder.title.setTextColor(ContextCompat.getColor(context, R.color.darkGreen));
         } else if (courseTitle.equals("BIOL")){
             if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {

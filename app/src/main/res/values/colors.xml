@@ -26,4 +26,10 @@
 
     <color name="lightPurple">#E082E4</color>
     <color name="darkPurple">#7E1481</color>
+
+    <color name="loginColor">#1D854E</color>
+    <color name="loginButton">#801D854E</color>
+
+    <color name="registerColor">#3C6199</color>
+    <color name="registerButton">#804F94C2</color>
 </resources>

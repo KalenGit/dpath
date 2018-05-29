@@ -2,21 +2,21 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true">
         <shape>
-            <stroke
-                android:color="#ffffff"
-                android:width="1.5dp"></stroke>
+            <!--<stroke-->
+                <!--android:color="@color/loginColor"-->
+                <!--android:width="1.5dp"></stroke>-->
 
-            <!--<solid-->
-                <!--android:color="#8030AD92"></solid>-->
+            <solid
+                android:color="@color/loginButton"></solid>
         </shape>
     </item>
     <item>
         <shape>
-            <!--<solid-->
-                <!--android:color="#8036C9AA"></solid>-->
-            <stroke
-                android:color="#ffffff"
-                android:width=".7dp"></stroke>
+            <solid
+                android:color="@color/loginButton"></solid>
+            <!--<stroke-->
+                <!--android:color="@color/loginColor"-->
+                <!--android:width=".7dp"></stroke>-->
 
         </shape>
     </item>

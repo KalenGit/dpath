@@ -28,10 +28,9 @@
             android:layout_height="match_parent"
             android:fontFamily="@font/avenirbold"
             android:text="text"
-            android:paddingLeft="12dp"
             android:textColor="@color/darkGreen"
             android:textSize="18sp"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:background="@drawable/recycler_shape2"/>
     <!--</RelativeLayout>-->
 

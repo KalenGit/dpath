@@ -1,6 +1,7 @@
 package edu.dartmouth.cs.d_path.Fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import edu.dartmouth.cs.d_path.Activies.LoginActivity;
 import edu.dartmouth.cs.d_path.Adapters.AllCourseAdapter;
 import edu.dartmouth.cs.d_path.Adapters.CourseAdapter;
 import edu.dartmouth.cs.d_path.Model.Course;
@@ -120,5 +122,13 @@ public class AllCoursesFragment extends Fragment {
         // specify an adapter (see also next example)
         mAdapter = new AllCourseAdapter(this.getActivity(), courses);
         mRecyclerView.setAdapter(mAdapter);
+    }
+    public void onReset(View v){
+
+    }
+    public void onSignOut(View v){
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        startActivity(intent);
     }
 }

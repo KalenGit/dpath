@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 import edu.dartmouth.cs.d_path.Activies.CourseDescriptionActivity;
+import edu.dartmouth.cs.d_path.Fragments.CoursesFragment;
 import edu.dartmouth.cs.d_path.Model.Course;
 import edu.dartmouth.cs.d_path.R;
 
@@ -81,9 +82,13 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                 public void onClick(View view){
                     DatabaseReference ref;
                     ref = FirebaseDatabase.getInstance().getReference("Users").child("user_"+ FirebaseAuth.getInstance().getUid()).child("recommendations");
-                    Log.d(TAG, courses.get(getAdapterPosition()).courseNumber);
-                    ref.child(courses.get(getAdapterPosition()).courseNumber).removeValue();
+                    ref.child(courses.get(getAdapterPosition()).courseNumber.replace(".","-")).removeValue();
                     delete(getAdapterPosition());
+
+                    courses.add(4, CoursesFragment.courses.get(0));
+                    CoursesFragment.courses.remove(0);
+                    notifyItemInserted(4);
+
 
                 }
             });
@@ -92,7 +97,10 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                 public void onClick(View view){
                     Toast.makeText(view.getContext(), "SAVE at "+ getAdapterPosition(), Toast.LENGTH_SHORT).show();
                     FirebaseDatabase.getInstance().getReference().child("Users")
-                            .child("user_" + FirebaseAuth.getInstance().getUid()).child("saved").child(courses.get(getAdapterPosition()).getCourseNumber().replace(".","-")).setValue(courses.get(getAdapterPosition()).getCourseNumber().replace(".","-"));
+                            .child("user_" + FirebaseAuth.getInstance().getUid()).child("saved")
+                            .child(courses.get(getAdapterPosition()).getCourseNumber()
+                                    .replace(".","-"))
+                            .setValue(courses.get(getAdapterPosition()).getCourseNumber().replace(".","-"));
                                 }
                             });
 
@@ -141,6 +149,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             } else {
                 holder.number.setBackground(ContextCompat.getDrawable(context, R.drawable.recycler_shape2));
             }
+            holder.number.setTextColor(ContextCompat.getColor(context, R.color.darkGreen));
             holder.title.setTextColor(ContextCompat.getColor(context, R.color.darkGreen));
         } else if (courseTitle.equals("BIOL")){
             if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {

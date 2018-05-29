@@ -34,7 +34,8 @@ public class CoursesFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    public ArrayList<Course> courses = new ArrayList<Course>();
+    public static ArrayList<Course> courses = new ArrayList<Course>();
+    public ArrayList<Course> firstCourses = new ArrayList<>();
 
 
     private FirebaseDatabase mFirebaseDatabase;
@@ -65,10 +66,15 @@ public class CoursesFragment extends Fragment {
             //get course and put into arraylist
             String courseNumber = dataSnapshot.getValue(String.class);
             Course course = courseTableService.CourseTable.get(courseNumber);
-            courses.add(course);
+            if (firstCourses.size()<5){
+                firstCourses.add(course);
+
+            }else {
+                courses.add(course);
 //            Course course = dataSnapshot.getValue(Course.class);
 //            courses.add(course);
-            mAdapter.notifyItemInserted(courses.size()-1);
+//            mAdapter.notifyItemInserted(courses.size()-1);
+            }
 
         }
 
@@ -119,9 +125,8 @@ public class CoursesFragment extends Fragment {
 
 
 
-
         // specify an adapter (see also next example)
-        mAdapter = new CourseAdapter(this.getActivity(), courses);
+        mAdapter = new CourseAdapter(this.getActivity(), firstCourses);
         mRecyclerView.setAdapter(mAdapter);
 
 //        // attach swipe controller to recycler view

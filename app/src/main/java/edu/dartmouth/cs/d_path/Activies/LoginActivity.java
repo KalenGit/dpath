@@ -43,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         etEmailInput = findViewById(R.id.email_input);
         btLogin = findViewById(R.id.login_button);
         btRegister = findViewById(R.id.register_button);
+
     }
 
     @Override
@@ -57,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         if (user!=null){
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            finish();
 
         }
     }
@@ -81,6 +83,7 @@ public class LoginActivity extends AppCompatActivity {
 //                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
+                            finish();
                             //if login is unsuccessful
                         } else {
                             Log.d(TAG, "SIGN IN FAIL");

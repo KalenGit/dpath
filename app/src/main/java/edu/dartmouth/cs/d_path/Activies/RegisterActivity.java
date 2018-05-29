@@ -1,5 +1,6 @@
 package edu.dartmouth.cs.d_path.Activies;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
@@ -62,6 +63,9 @@ public class RegisterActivity extends AppCompatActivity {
         majorSpinner = findViewById(R.id.major_register);
         ArrayAdapter<String> inputAdapter = new ArrayAdapter<String>(this, R.layout.item_spinner, majors);
         majorSpinner.setAdapter(inputAdapter);
+
+        majorSpinner.getBackground().setColorFilter(getResources().getColor(R.color.registerColor),
+                PorterDuff.Mode.SRC_ATOP);
 
 
     }

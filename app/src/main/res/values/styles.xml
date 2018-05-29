@@ -48,6 +48,10 @@
         <item name="colorControlNormal">@color/lightTurq</item>
         <item name="colorControlActivated">@color/darkTurq</item>
     </style>
+    <style name="spinner" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@color/registerColor</item>
+    </style>
 
 
 </resources>
