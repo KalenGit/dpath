@@ -16,7 +16,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
+import edu.dartmouth.cs.d_path.Model.Course;
 import edu.dartmouth.cs.d_path.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -26,6 +33,8 @@ public class LoginActivity extends AppCompatActivity {
     Button btLogin;
     Button btRegister;
     private FirebaseAuth mAuth;
+
+    public static HashMap<String, Course> courseTable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+
         // Check if user is signed in automatically go to main activity
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);

@@ -85,8 +85,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                     ref.child(courses.get(getAdapterPosition()).courseNumber.replace(".","-")).removeValue();
                     delete(getAdapterPosition());
 
-                    courses.add(4, CoursesFragment.courses.get(0));
-                    CoursesFragment.courses.remove(0);
+                    courses.add(4, courses.get(0));
+                    courses.remove(0);
                     notifyItemInserted(4);
 
 

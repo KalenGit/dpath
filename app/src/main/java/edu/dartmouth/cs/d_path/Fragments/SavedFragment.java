@@ -19,11 +19,10 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-import edu.dartmouth.cs.d_path.Adapters.CourseAdapter;
 import edu.dartmouth.cs.d_path.Adapters.SavedCourseAdapter;
 import edu.dartmouth.cs.d_path.Model.Course;
 import edu.dartmouth.cs.d_path.R;
-import edu.dartmouth.cs.d_path.service.courseTableService;
+import edu.dartmouth.cs.d_path.service.CourseTableService;
 
 /**
  * Created by jameslee on 5/24/18.
@@ -59,7 +58,7 @@ public class SavedFragment extends Fragment {
             //get course and put into arraylist
 //            Course course = dataSnapshot.getValue(Course.class);
             String courseNumber = dataSnapshot.getValue(String.class);
-            Course course = courseTableService.CourseTable.get(courseNumber);
+            Course course = CourseTableService.CourseTable.get(courseNumber);
             courses.add(course);
             mAdapter.notifyItemInserted(courses.size()-1);
 

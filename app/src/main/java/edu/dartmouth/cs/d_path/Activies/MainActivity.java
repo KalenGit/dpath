@@ -8,19 +8,29 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import edu.dartmouth.cs.d_path.Fragments.AllCoursesFragment;
 import edu.dartmouth.cs.d_path.Fragments.CoursesFragment;
 import edu.dartmouth.cs.d_path.Adapters.NavViewPager;
 import edu.dartmouth.cs.d_path.Adapters.NavViewPagerAdapter;
 import edu.dartmouth.cs.d_path.Fragments.ProfileFragment;
+import edu.dartmouth.cs.d_path.Model.Course;
 import edu.dartmouth.cs.d_path.R;
 import edu.dartmouth.cs.d_path.Fragments.SavedFragment;
 
 
 public class MainActivity extends AppCompatActivity {
     private NavViewPager viewPager;
+    public HashMap<String, Course> courseTable;
+    public ArrayList<Fragment> fragments;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         //set up bottom navigation and add fragments
         BottomNavigationView navigation = findViewById(R.id.navigation);
         viewPager = findViewById(R.id.viewpager);
-        ArrayList<Fragment> fragments = new ArrayList<Fragment>();
+        fragments = new ArrayList<Fragment>();
         fragments.add(new AllCoursesFragment());
         fragments.add(new CoursesFragment());
         fragments.add(new SavedFragment());
@@ -68,5 +78,26 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    public void createCourseTable(){
+        courseTable = new HashMap<>();
+        FirebaseDatabase
+                .getInstance()
+                .getReference("Courses")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot data : dataSnapshot.getChildren()){
+                            Course course = data.getValue(Course.class);
+                            courseTable.put(course.getCourseNumber().replace(".", "-"), course);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
     }
 }

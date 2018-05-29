@@ -20,10 +20,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import edu.dartmouth.cs.d_path.Activies.LoginActivity;
+import edu.dartmouth.cs.d_path.Activies.MainActivity;
 import edu.dartmouth.cs.d_path.Adapters.CourseAdapter;
 import edu.dartmouth.cs.d_path.Model.Course;
 import edu.dartmouth.cs.d_path.R;
-import edu.dartmouth.cs.d_path.service.courseTableService;
+import edu.dartmouth.cs.d_path.service.CourseTableService;
 
 /**
  * Created by jameslee on 5/24/18.
@@ -34,14 +36,14 @@ public class CoursesFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    public static ArrayList<Course> courses = new ArrayList<Course>();
+    public ArrayList<Course> courses = new ArrayList<Course>();
     public ArrayList<Course> firstCourses = new ArrayList<>();
 
 
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mEntriesRef;
 
-    private HashMap<String, Course> asdf = courseTableService.CourseTable;
+    private HashMap<String, Course> asdf = CourseTableService.CourseTable;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,7 +67,12 @@ public class CoursesFragment extends Fragment {
             Log.d(TAG, "ON CHILD ADDED");
             //get course and put into arraylist
             String courseNumber = dataSnapshot.getValue(String.class);
-            Course course = courseTableService.CourseTable.get(courseNumber);
+
+            Course course = ((AllCoursesFragment)
+                    ((MainActivity)getContext())
+                            .fragments.get(0))
+                    .allCourses.get(courseNumber);
+
             if (firstCourses.size()<5){
                 firstCourses.add(course);
 
@@ -126,7 +133,7 @@ public class CoursesFragment extends Fragment {
 
 
         // specify an adapter (see also next example)
-        mAdapter = new CourseAdapter(this.getActivity(), firstCourses);
+        mAdapter = new CourseAdapter(this.getActivity(), courses); // change this back to firstcourses
         mRecyclerView.setAdapter(mAdapter);
 
 //        // attach swipe controller to recycler view

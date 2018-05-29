@@ -43,7 +43,7 @@ public class AllCoursesFragment extends Fragment {
 
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mEntriesRef;
-//    public static HashMap<String, Course> allCourses = new HashMap<>();
+    public HashMap<String, Course> allCourses = new HashMap<>();
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -65,6 +65,7 @@ public class AllCoursesFragment extends Fragment {
             Log.d(TAG, "ON CHILD ADDED");
             //get course and put into arraylist
             Course course = dataSnapshot.getValue(Course.class);
+            allCourses.put(course.getCourseNumber(), course);
             courses.add(course);
             mAdapter.notifyItemInserted(courses.size()-1);
 

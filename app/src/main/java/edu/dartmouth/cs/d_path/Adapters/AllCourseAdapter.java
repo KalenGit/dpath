@@ -27,6 +27,7 @@ import java.util.List;
 import edu.dartmouth.cs.d_path.Activies.CourseDescriptionActivity;
 import edu.dartmouth.cs.d_path.Model.Course;
 import edu.dartmouth.cs.d_path.R;
+import edu.dartmouth.cs.d_path.service.ColorChangeService;
 
 /**
  * Created by jameslee on 5/28/18.
@@ -86,8 +87,13 @@ public class AllCourseAdapter extends RecyclerView.Adapter<AllCourseAdapter.View
 
         }
 
+        public TextView getNumber() {
+            return number;
+        }
 
-
+        public TextView getTitle() {
+            return title;
+        }
     }
 
 
@@ -111,68 +117,53 @@ public class AllCourseAdapter extends RecyclerView.Adapter<AllCourseAdapter.View
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder,int position) {
+        ColorChangeService colorChangeService = new ColorChangeService(context);
         Course currentCourse = courses.get(position);
         holder.title.setText(currentCourse.title);
         holder.number.setText(currentCourse.courseNumber);
-        changeColor(holder, currentCourse);
+        colorChangeService.changeColor(holder, currentCourse);
 
     }
 
     public void changeColor(ViewHolder holder, Course currentCourse){
         String courseNumb = currentCourse.getCourseNumber();
-        String courseTitle = courseNumb.substring(0, Math.min(courseNumb.length(), 4));
         final int sdk = android.os.Build.VERSION.SDK_INT;
+        int drawable = 0;
+        int color = 0;
 
-        if (courseTitle.equals("ECON")){
-            if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                holder.number.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.recycler_shape2) );
-            } else {
-                holder.number.setBackground(ContextCompat.getDrawable(context, R.drawable.recycler_shape2));
-            }
-            holder.number.setTextColor(ContextCompat.getColor(context, R.color.darkGreen));
-            holder.title.setTextColor(ContextCompat.getColor(context, R.color.darkGreen));
-        } else if (courseTitle.equals("BIOL")){
-            if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                holder.number.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.recycler_shape2_orange) );
-            } else {
-                holder.number.setBackground(ContextCompat.getDrawable(context, R.drawable.recycler_shape2_orange));
-            }
-            holder.number.setTextColor(ContextCompat.getColor(context, R.color.darkOrange));
-            holder.title.setTextColor(ContextCompat.getColor(context, R.color.darkOrange));
-        } else if(courseTitle.equals("COSC")){
-            if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                holder.number.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.recycler_shape2_blue) );
-            } else {
-                holder.number.setBackground(ContextCompat.getDrawable(context, R.drawable.recycler_shape2_blue));
-            }
-            holder.number.setTextColor(ContextCompat.getColor(context, R.color.darkBlue));
-            holder.title.setTextColor(ContextCompat.getColor(context, R.color.darkBlue));
-        } else if (courseTitle.equals("HIST")) {
-            if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                holder.number.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.recycler_shape2_red) );
-            } else {
-                holder.number.setBackground(ContextCompat.getDrawable(context, R.drawable.recycler_shape2_red));
-            }
-            holder.number.setTextColor(ContextCompat.getColor(context, R.color.darkRed));
-            holder.title.setTextColor(ContextCompat.getColor(context, R.color.darkRed));
-        } else if(courseTitle.equals("GOVT")){
-            if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                holder.number.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.recycler_shape2_turq) );
-            } else {
-                holder.number.setBackground(ContextCompat.getDrawable(context, R.drawable.recycler_shape2_turq));
-            }
-            holder.number.setTextColor(ContextCompat.getColor(context, R.color.darkTurq));
-            holder.title.setTextColor(ContextCompat.getColor(context, R.color.darkTurq));
-        } else if(courseTitle.equals("ENGS")) {
-            if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                holder.number.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.recycler_shape2_purple));
-            } else {
-                holder.number.setBackground(ContextCompat.getDrawable(context, R.drawable.recycler_shape2_purple));
-            }
-            holder.number.setTextColor(ContextCompat.getColor(context, R.color.darkPurple));
-            holder.title.setTextColor(ContextCompat.getColor(context, R.color.darkPurple));
 
+        if (courseNumb.contains("ECON")){
+            drawable = R.drawable.recycler_shape2;
+            color = R.color.darkGreen;
+
+        } else if (courseNumb.contains("BIOL")){
+            drawable = R.drawable.recycler_shape2_orange;
+            color = R.color.darkOrange;
+
+        } else if(courseNumb.contains("COSC")){
+            drawable = R.drawable.recycler_shape2_blue;
+            color = R.color.darkBlue;
+
+        } else if (courseNumb.contains("HIST")) {
+            drawable = R.drawable.recycler_shape2_red;
+            color = R.color.darkRed;
+
+        } else if(courseNumb.contains("GOVT")){
+            drawable = R.drawable.recycler_shape2_turq;
+            color = R.color.darkTurq;
+
+        } else if(courseNumb.contains("ENGS")) {
+            drawable = R.drawable.recycler_shape2_purple;
+            color = R.color.darkPurple;
         }
+
+        if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            holder.number.setBackgroundDrawable(ContextCompat.getDrawable(context, drawable) );
+        } else {
+            holder.number.setBackground(ContextCompat.getDrawable(context, drawable));
+        }
+        holder.number.setTextColor(ContextCompat.getColor(context, color));
+        holder.title.setTextColor(ContextCompat.getColor(context, color));
 
     }
 

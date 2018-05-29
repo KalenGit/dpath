@@ -17,7 +17,7 @@ import edu.dartmouth.cs.d_path.Model.Course;
  */
 
 
-public class courseTableService{
+public class CourseTableService {
 
     public static HashMap<String, Course> CourseTable = new HashMap();
 
