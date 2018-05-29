@@ -1,25 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="300dp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/course_row"
-    android:layout_height="100dp"
-    android:orientation="horizontal"
-    android:background="@color/white"
-    android:layout_marginTop="50dp"
-    android:layout_marginLeft="50dp"
-    android:gravity="center">
-    
-    <TextView
-        android:id="@+id/course_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="50dp"
-        android:text="text"/>
+    android:layout_width="375dp"
+    android:layout_height="80dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/recycler_shape"
+    android:orientation="horizontal">
+
+    <!--<RelativeLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:background="@drawable/recycler_shape2">-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/left_image"-->
+            <!--android:layout_width="80dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:background="@color/lightGreen"-->
+            <!--android:scaleType="fitXY" />-->
+
+        <TextView
+            android:id="@+id/course_number"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/avenirbold"
+            android:text="text"
+            android:paddingLeft="12dp"
+            android:textColor="@color/darkGreen"
+            android:textSize="18sp"
+            android:gravity="center_vertical"
+            android:background="@drawable/recycler_shape2"/>
+    <!--</RelativeLayout>-->
+
     <TextView
         android:id="@+id/course_title"
-        android:layout_width="wrap_content"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:text="test"
-        />
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="12dp"
+        android:fontFamily="@font/avenir"
+        android:textColor="@color/nav"
+        android:textSize="15sp"
+        android:text="test" />
+
+    <ImageView
+        android:id="@+id/delete_icon"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:paddingBottom="25dp"
+        android:paddingTop="25dp"
+        android:src="@drawable/ic_delete_black_24dp" />
+
+    <ImageView
+        android:id="@+id/save_icon"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:paddingBottom="25dp"
+        android:paddingTop="25dp"
+        android:src="@drawable/ic_check_black_24dp" />
 
 </LinearLayout>

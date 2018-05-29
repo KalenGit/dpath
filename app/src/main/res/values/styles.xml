@@ -24,6 +24,30 @@
     <style name="nav" parent="Widget.Design.BottomNavigationView">
     <item name="fontFamily">@font/avenir</item>
     </style>
+    <style name="RatingBarGreen" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/lightGreen</item>
+        <item name="colorControlActivated">@color/darkGreen</item>
+    </style>
+    <style name="RatingBarOrange" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/lightOrange</item>
+        <item name="colorControlActivated">@color/darkOrange</item>
+    </style>
+    <style name="RatingBarRed" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/lightRed</item>
+        <item name="colorControlActivated">@color/darkRed</item>
+    </style>
+    <style name="RatingBarBlue" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/lightBlue</item>
+        <item name="colorControlActivated">@color/darkBlue</item>
+    </style>
+    <style name="RatingBarPurple" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/lightPurple</item>
+        <item name="colorControlActivated">@color/darkPurple</item>
+    </style>
+    <style name="RatingBarTurq" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/lightTurq</item>
+        <item name="colorControlActivated">@color/darkTurq</item>
+    </style>
 
 
 </resources>

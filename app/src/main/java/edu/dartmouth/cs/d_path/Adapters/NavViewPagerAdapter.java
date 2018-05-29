@@ -1,4 +1,4 @@
-package edu.dartmouth.cs.d_path;
+package edu.dartmouth.cs.d_path.Adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,9 +15,11 @@ public class NavViewPagerAdapter extends FragmentPagerAdapter {
     private static final String TAG = NavViewPagerAdapter.class.getSimpleName();;
     private ArrayList<Fragment> fragments;
 
-    private static final int COURSES = 0;
-    private static final int SAVED= 1;
-    private static final int PROFILE = 2;
+    private static final int ALLCOURSES = 0;
+    private static final int COURSES = 1;
+    private static final int SAVED= 2;
+    private static final int PROFILE = 3;
+    private static final String TAB_ALLCOURSES = "ALLCOURSES";
     private static final String TAB_COURSES= "COURSES";
     private static final String TAB_SAVED= "SAVED";
     private static final String TAB_PROFILE = "PROFILE";
@@ -40,6 +42,8 @@ public class NavViewPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         Log.d(TAG, "getPageTitle " + "position " + position);
         switch (position) {
+            case ALLCOURSES:
+                return TAB_ALLCOURSES;
             case COURSES:
                 return TAB_COURSES;
             case SAVED:
@@ -48,6 +52,7 @@ public class NavViewPagerAdapter extends FragmentPagerAdapter {
                 return TAB_PROFILE;
             default:
                 break;
+
         }
         return null;
     }

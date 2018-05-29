@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="375dp"
+    android:id="@+id/saved_course_row"
+    android:layout_height="80dp"
+    android:orientation="horizontal"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/recycler_shape"
+    android:layout_marginLeft="20dp">
+
+
+    <TextView
+        android:id="@+id/major_header"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:text="test"
+        android:paddingLeft="12dp"
+        android:fontFamily="@font/avenir"
+        android:textColor="@color/nav"
+        android:textSize="15sp"
+        android:layout_gravity="center_vertical"
+        />
+
+</LinearLayout>

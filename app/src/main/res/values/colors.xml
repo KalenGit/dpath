@@ -6,5 +6,24 @@
     <color name="white">#ffffff</color>
     <color name="nav">#4B915E</color>
     <color name="lightGreen">#8ACD9C</color>
+    <color name="lighterGreen">#A9F0BC</color>
+    <color name="lightGray">#F1F1F1</color>
+    <color name="shadow">#BBBBBB</color>
+    <color name="darkGreen">#17652C</color>
+    <color name="iconColor">#686868</color>
 
+    <color name ="lightBlue">#6BC3D3</color>
+    <color name="darkBlue">#16547A</color>
+
+    <color name="lightRed">#DF7491</color>
+    <color name="darkRed">#951C34</color>
+
+    <color name="lightTurq">#6CD6C8</color>
+    <color name="darkTurq">#10675B</color>
+
+    <color name="lightOrange">#E1A179</color>
+    <color name="darkOrange">#7D3616</color>
+
+    <color name="lightPurple">#E082E4</color>
+    <color name="darkPurple">#7E1481</color>
 </resources>

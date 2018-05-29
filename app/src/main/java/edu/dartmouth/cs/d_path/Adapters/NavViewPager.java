@@ -1,4 +1,4 @@
-package edu.dartmouth.cs.d_path;
+package edu.dartmouth.cs.d_path.Adapters;
 
 /**
  * Created by jameslee on 5/26/18.

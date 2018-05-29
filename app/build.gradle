@@ -31,7 +31,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:15.1.0'
     implementation 'com.google.firebase:firebase-database:15.0.1'
     compile 'com.android.support:recyclerview-v7:26.1.0'
-
+    compile 'com.bignerdranch.android:expandablerecyclerview:3.0.0-RC1'
 
 }
 

@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/lightGreen"
+    android:background="@color/lightGray"
     android:layout_height="match_parent">
 
-    <edu.dartmouth.cs.d_path.NavViewPager
+    <edu.dartmouth.cs.d_path.Adapters.NavViewPager
 
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
 
 
 
-    </edu.dartmouth.cs.d_path.NavViewPager>
+    </edu.dartmouth.cs.d_path.Adapters.NavViewPager>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"

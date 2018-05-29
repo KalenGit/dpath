@@ -9,7 +9,17 @@
     <string name="password_length_error">Password must be at least 6 characters</string>
     <string name="invalid_email_error">Email is invalid</string>
     <string name="auth_fail_message">Sign in failed</string>
-    <string name="title_courses">Courses</string>
+    <string name="title_courses">Recommended Courses</string>
     <string name="title_saved">Saved</string>
     <string name="title_profile">Profile</string>
+    <string name="rate">Rate!</string>
+    <string name="test">Test</string>
+    <string name="major">Major</string>
+    <string name="reset_preference">Reset All Preferences</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="description">Description</string>
+    <string name="instructors">Instructors</string>
+    <string name="distributives">Distributives</string>
+    <string name="offered">Offered</string>
+    <string name="allcourses">All Courses</string>
 </resources>
