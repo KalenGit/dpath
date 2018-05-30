@@ -58,7 +58,6 @@ public class AllCourseAdapter extends RecyclerView.Adapter<AllCourseAdapter.View
             layout.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
-                    Toast.makeText(view.getContext(), "Item Clicked at "+ getAdapterPosition(), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(context, CourseDescriptionActivity.class);
                     intent.putExtra("course_number",courses.get(getAdapterPosition()).courseNumber);
                     intent.putExtra("course_description", courses.get(getAdapterPosition()).description);
@@ -74,7 +73,7 @@ public class AllCourseAdapter extends RecyclerView.Adapter<AllCourseAdapter.View
             save.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
-                    Toast.makeText(view.getContext(), "SAVE at "+ getAdapterPosition(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "SAVED "+ courses.get(getAdapterPosition()).getCourseNumber(), Toast.LENGTH_SHORT).show();
                     FirebaseDatabase.getInstance().getReference().child("Users")
                             .child("user_" + FirebaseAuth.getInstance().getUid()).child("saved")
                             .child(courses.get(getAdapterPosition()).getCourseNumber()

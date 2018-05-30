@@ -1,5 +1,6 @@
 package edu.dartmouth.cs.d_path.Activies;
 
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
@@ -8,9 +9,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.AnticipateInterpolator;
+import android.view.animation.AnticipateOvershootInterpolator;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.daasuu.ei.Ease;
+import com.daasuu.ei.EasingInterpolator;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -28,6 +38,7 @@ import edu.dartmouth.cs.d_path.R;
 
 public class LoginActivity extends AppCompatActivity {
     public static final String TAG = "LoginActivity";
+    ImageView mIcon;
     TextInputEditText etPasswordInput;
     TextInputEditText etEmailInput;
     Button btLogin;
@@ -52,6 +63,15 @@ public class LoginActivity extends AppCompatActivity {
         etEmailInput = findViewById(R.id.email_input);
         btLogin = findViewById(R.id.login_button);
         btRegister = findViewById(R.id.register_button);
+        mIcon = findViewById(R.id.icon_login);
+
+        Animation anim = AnimationUtils.loadAnimation(this, R.anim.login_animation);
+        anim.setInterpolator(new AnticipateOvershootInterpolator());
+//        btLogin.startAnimation(anim);
+//        btRegister.startAnimation(anim);
+//        etPasswordInput.startAnimation(anim);
+//        etEmailInput.startAnimation(anim);
+        mIcon.startAnimation(anim);
 
     }
 

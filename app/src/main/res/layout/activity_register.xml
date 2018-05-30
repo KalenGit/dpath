@@ -11,6 +11,7 @@
         android:background="@mipmap/register_background3">
 
         <ImageView
+            android:id="@+id/icon_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_artboard_8"
@@ -90,7 +91,7 @@
             android:text="@string/register"
             android:onClick="onRegisterProfile"
             android:layout_gravity="center"
-            android:background="@color/registerButton"
+            android:background="@drawable/register_button"
             android:fontFamily="@font/avenir"
             android:textColor="@color/white"
             android:textSize="20sp"

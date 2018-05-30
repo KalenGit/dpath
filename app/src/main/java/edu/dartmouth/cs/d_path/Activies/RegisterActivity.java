@@ -9,8 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -30,6 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
     TextInputEditText etEmail;
     TextInputEditText etPassword;
     Button btRegister;
+    ImageView mIcon;
 
     UserProfile newUser;
 
@@ -59,6 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.email_register);
         etPassword = findViewById(R.id.password_register);
         btRegister = findViewById(R.id.register_button2);
+        mIcon = findViewById(R.id.icon_register);
 
         majorSpinner = findViewById(R.id.major_register);
         ArrayAdapter<String> inputAdapter = new ArrayAdapter<String>(this, R.layout.item_spinner, majors);
@@ -66,6 +72,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         majorSpinner.getBackground().setColorFilter(getResources().getColor(R.color.registerColor),
                 PorterDuff.Mode.SRC_ATOP);
+
+        Animation anim = AnimationUtils.loadAnimation(this, R.anim.login_animation);
+        anim.setInterpolator(new AnticipateOvershootInterpolator());
+        mIcon.startAnimation(anim);
 
 
     }

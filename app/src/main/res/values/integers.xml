@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="anim_duration_medium">700</integer>
+    <integer name="anim_duration_courses">600</integer>
+    <integer name="anim_duration_mediu">1000</integer>
+    <integer name="anim_duration_login">800</integer>
+    <integer name="anim_duration_login_more">1500</integer>
+</resources>

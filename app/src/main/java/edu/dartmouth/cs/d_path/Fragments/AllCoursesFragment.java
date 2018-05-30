@@ -1,6 +1,7 @@
 package edu.dartmouth.cs.d_path.Fragments;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +12,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -67,7 +70,7 @@ public class AllCoursesFragment extends Fragment {
             Course course = dataSnapshot.getValue(Course.class);
 //            allCourses.put(course.getCourseNumber(), course);
             courses.add(course);
-            mAdapter.notifyItemInserted(courses.size()-1);
+            runLayoutAnimation(mRecyclerView);
 
         }
 
@@ -124,12 +127,14 @@ public class AllCoursesFragment extends Fragment {
         mAdapter = new AllCourseAdapter(this.getActivity(), courses);
         mRecyclerView.setAdapter(mAdapter);
     }
-    public void onReset(View v){
 
-    }
-    public void onSignOut(View v){
-        FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(getActivity(), LoginActivity.class);
-        startActivity(intent);
+    private void runLayoutAnimation(final RecyclerView recyclerView) {
+        final Context context = recyclerView.getContext();
+        final LayoutAnimationController controller =
+                AnimationUtils.loadLayoutAnimation(context, R.anim.course_layout_animation);
+        mAdapter.notifyDataSetChanged();
+
+        recyclerView.setLayoutAnimation(controller);
+        recyclerView.scheduleLayoutAnimation();
     }
 }

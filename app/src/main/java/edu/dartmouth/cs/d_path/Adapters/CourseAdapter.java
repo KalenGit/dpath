@@ -38,6 +38,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     private Context context;
     private LayoutInflater inflater;
     ArrayList<Course> courses = new ArrayList<>();
+    ArrayList<Course> coursesRest = new ArrayList<>();
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -62,7 +63,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             layout.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
-                    Toast.makeText(view.getContext(), "Item Clicked at "+ getAdapterPosition(), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(context, CourseDescriptionActivity.class);
                     intent.putExtra("course_number",courses.get(getAdapterPosition()).courseNumber);
                     intent.putExtra("course_description", courses.get(getAdapterPosition()).description);
@@ -80,14 +80,15 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             delete.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
+                    Toast.makeText(view.getContext(), "DELETED "+ courses.get(getAdapterPosition()).getCourseNumber(), Toast.LENGTH_SHORT).show();
                     DatabaseReference ref;
                     ref = FirebaseDatabase.getInstance().getReference("Users").child("user_"+ FirebaseAuth.getInstance().getUid()).child("recommendations");
                     ref.child(courses.get(getAdapterPosition()).courseNumber.replace(".","-")).removeValue();
                     delete(getAdapterPosition());
 
-                    courses.add(4, courses.get(0));
-                    courses.remove(0);
-                    notifyItemInserted(4);
+                    courses.add(5, coursesRest.get(0));
+                    coursesRest.remove(0);
+                    notifyItemInserted(5);
 
 
                 }
@@ -95,7 +96,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             save.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
-                    Toast.makeText(view.getContext(), "SAVE at "+ getAdapterPosition(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "SAVED "+ courses.get(getAdapterPosition()).getCourseNumber(), Toast.LENGTH_SHORT).show();
                     FirebaseDatabase.getInstance().getReference().child("Users")
                             .child("user_" + FirebaseAuth.getInstance().getUid()).child("saved")
                             .child(courses.get(getAdapterPosition()).getCourseNumber()
@@ -111,10 +112,11 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public CourseAdapter(Context context, ArrayList<Course> courses) {
+    public CourseAdapter(Context context, ArrayList<Course> courses, ArrayList<Course> courseRest) {
         inflater = LayoutInflater.from(context);
         this.context = context;
         this.courses = courses;
+        this.coursesRest = courseRest;
     }
 
     // Create new views (invoked by the layout manager)
@@ -139,62 +141,45 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
         changeColor(holder, currentCourse);
     }
-
     public void changeColor(ViewHolder holder, Course currentCourse){
         String courseNumb = currentCourse.getCourseNumber();
-        String courseTitle = courseNumb.substring(0, Math.min(courseNumb.length(), 4));
         final int sdk = android.os.Build.VERSION.SDK_INT;
+        int drawable = 0;
+        int color = 0;
 
-        if (courseTitle.equals("ECON")){
-            if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                holder.number.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.recycler_shape2) );
-            } else {
-                holder.number.setBackground(ContextCompat.getDrawable(context, R.drawable.recycler_shape2));
-            }
-            holder.number.setTextColor(ContextCompat.getColor(context, R.color.darkGreen));
-            holder.title.setTextColor(ContextCompat.getColor(context, R.color.darkGreen));
-        } else if (courseTitle.equals("BIOL")){
-            if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                holder.number.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.recycler_shape2_orange) );
-            } else {
-                holder.number.setBackground(ContextCompat.getDrawable(context, R.drawable.recycler_shape2_orange));
-            }
-            holder.number.setTextColor(ContextCompat.getColor(context, R.color.darkOrange));
-            holder.title.setTextColor(ContextCompat.getColor(context, R.color.darkOrange));
-        } else if(courseTitle.equals("COSC")){
-            if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                holder.number.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.recycler_shape2_blue) );
-            } else {
-                holder.number.setBackground(ContextCompat.getDrawable(context, R.drawable.recycler_shape2_blue));
-            }
-            holder.number.setTextColor(ContextCompat.getColor(context, R.color.darkBlue));
-            holder.title.setTextColor(ContextCompat.getColor(context, R.color.darkBlue));
-        } else if (courseTitle.equals("HIST")) {
-            if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                holder.number.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.recycler_shape2_red) );
-            } else {
-                holder.number.setBackground(ContextCompat.getDrawable(context, R.drawable.recycler_shape2_red));
-            }
-            holder.number.setTextColor(ContextCompat.getColor(context, R.color.darkRed));
-            holder.title.setTextColor(ContextCompat.getColor(context, R.color.darkRed));
-        } else if(courseTitle.equals("GOVT")){
-            if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                holder.number.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.recycler_shape2_turq) );
-            } else {
-                holder.number.setBackground(ContextCompat.getDrawable(context, R.drawable.recycler_shape2_turq));
-            }
-            holder.number.setTextColor(ContextCompat.getColor(context, R.color.darkTurq));
-            holder.title.setTextColor(ContextCompat.getColor(context, R.color.darkTurq));
-        } else if(courseTitle.equals("ENGS")) {
-            if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                holder.number.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.recycler_shape2_purple));
-            } else {
-                holder.number.setBackground(ContextCompat.getDrawable(context, R.drawable.recycler_shape2_purple));
-            }
-            holder.number.setTextColor(ContextCompat.getColor(context, R.color.darkPurple));
-            holder.title.setTextColor(ContextCompat.getColor(context, R.color.darkPurple));
 
+        if (courseNumb.contains("ECON")){
+            drawable = R.drawable.recycler_shape2;
+            color = R.color.darkGreen;
+
+        } else if (courseNumb.contains("BIOL")){
+            drawable = R.drawable.recycler_shape2_orange;
+            color = R.color.darkOrange;
+
+        } else if(courseNumb.contains("COSC")){
+            drawable = R.drawable.recycler_shape2_blue;
+            color = R.color.darkBlue;
+
+        } else if (courseNumb.contains("HIST")) {
+            drawable = R.drawable.recycler_shape2_red;
+            color = R.color.darkRed;
+
+        } else if(courseNumb.contains("GOVT")){
+            drawable = R.drawable.recycler_shape2_turq;
+            color = R.color.darkTurq;
+
+        } else if(courseNumb.contains("ENGS")) {
+            drawable = R.drawable.recycler_shape2_purple;
+            color = R.color.darkPurple;
         }
+
+        if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            holder.number.setBackgroundDrawable(ContextCompat.getDrawable(context, drawable) );
+        } else {
+            holder.number.setBackground(ContextCompat.getDrawable(context, drawable));
+        }
+        holder.number.setTextColor(ContextCompat.getColor(context, color));
+        holder.title.setTextColor(ContextCompat.getColor(context, color));
 
     }
 

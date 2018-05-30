@@ -1,14 +1,18 @@
 package edu.dartmouth.cs.d_path.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -36,8 +40,15 @@ public class CoursesFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    public ArrayList<Course> courses = new ArrayList<Course>();
+    private SwipeRefreshLayout mSwipeRefresh;
+
+    public static ArrayList<Course> courses = new ArrayList<Course>();
     public ArrayList<Course> firstCourses = new ArrayList<>();
+
+    public ArrayList<Course> coursesUpdated = new ArrayList<Course>();
+    public ArrayList<Course> firstCoursesUpdated = new ArrayList<>();
+
+
 
 
     private FirebaseDatabase mFirebaseDatabase;
@@ -54,7 +65,6 @@ public class CoursesFragment extends Fragment {
         mEntriesRef = mFirebaseDatabase.getReference("Users");
         mEntriesRef.child("user_"+ FirebaseAuth.getInstance().getUid()).child("recommendations").addChildEventListener(new RecommendationsChildEventListener());
         Log.d(TAG, mEntriesRef.toString());
-        System.out.println(asdf);
 
     }
 
@@ -67,13 +77,16 @@ public class CoursesFragment extends Fragment {
             Log.d(TAG, "ON CHILD ADDED");
             //get course and put into arraylist
             String courseNumber = dataSnapshot.getValue(String.class);
+            String courseKey = dataSnapshot.getKey();
+            int courseKeyNumber = Integer.parseInt(courseKey);
 
             Course course = LoginActivity.courseTable.get(courseNumber);
-
-            if (firstCourses.size()<5){
-                firstCourses.add(course);
-//                mAdapter.notifyItemInserted(courses.size()-1);
-
+            if (courseKeyNumber< 200){
+                if (firstCourses.size()<6) {
+                    firstCourses.add(course);
+                    mAdapter.notifyDataSetChanged();
+                    runLayoutAnimation(mRecyclerView);
+                }
             }else {
                 courses.add(course);
 //            Course course = dataSnapshot.getValue(Course.class);
@@ -86,6 +99,30 @@ public class CoursesFragment extends Fragment {
         //when child is updated, change in database
         public void onChildChanged(DataSnapshot dataSnapshot, String s) {
             Log.d(TAG, "ON CHILD CHANGED");
+            String courseNumber = dataSnapshot.getValue(String.class);
+            String courseKey = dataSnapshot.getKey();
+            int courseKeyNumber = Integer.parseInt(courseKey);
+
+            Course course = LoginActivity.courseTable.get(courseNumber);
+            if (courseKeyNumber < 200) {
+                if (firstCourses.size() < 12) {
+                    firstCourses.add(course);
+                } else {
+                    courses.remove(0);
+                    courses.add(course);
+                }
+            }
+            if (courseKeyNumber == 200){
+                firstCourses.remove(0);
+                firstCourses.remove(0);
+                firstCourses.remove(0);
+                firstCourses.remove(0);
+                firstCourses.remove(0);
+                firstCourses.remove(0);
+            }
+
+
+
 
 
         }
@@ -94,7 +131,7 @@ public class CoursesFragment extends Fragment {
         //when child is removed in firebase
         public void onChildRemoved(DataSnapshot dataSnapshot) {
             Log.d(TAG, "ON CHILD REMOVED");
-            Course course = dataSnapshot.getValue(Course.class);
+//            Course course = dataSnapshot.getValue(Course.class);
 
 
 
@@ -117,20 +154,61 @@ public class CoursesFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_courses, container, false);
 
     }
+
+    @Override
+    public void onResume() {
+        Log.d(TAG, "RESUME");
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        Log.d(TAG, "Puase");
+        super.onPause();
+    }
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        Log.d(TAG, "onAttach");
+        super.onAttachFragment(fragment);
+
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "RESTORED");
+        super.onViewStateRestored(savedInstanceState);
+    }
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "onViewCreated");
 
         mRecyclerView = view.findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
+        mSwipeRefresh = view.findViewById(R.id.swipeRefreshLayout);
 
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                runLayoutAnimation(mRecyclerView);
+                mSwipeRefresh.setRefreshing(false);
+            }
+        });
 
-
-
+//
+//        if (!firstCoursesUpdated.isEmpty()){
+//            firstCourses = firstCoursesUpdated;
+//            firstCoursesUpdated.clear();
+//        }
+//        if (!coursesUpdated.isEmpty()){
+//            courses= coursesUpdated;
+//            coursesUpdated.clear();
+//        }
         // specify an adapter (see also next example)
-        mAdapter = new CourseAdapter(this.getActivity(), firstCourses); // change this back to firstcourses
+        mAdapter = new CourseAdapter(this.getActivity(), firstCourses, courses); // change this back to firstcourses
         mRecyclerView.setAdapter(mAdapter);
 
 //        // attach swipe controller to recycler view
@@ -139,5 +217,13 @@ public class CoursesFragment extends Fragment {
 //        itemTouchhelper.attachToRecyclerView(mRecyclerView);
 
 
+    }
+    private void runLayoutAnimation(final RecyclerView recyclerView) {
+        final Context context = recyclerView.getContext();
+        final LayoutAnimationController controller =
+                AnimationUtils.loadLayoutAnimation(context, R.anim.course_layout_animation);
+        mAdapter.notifyDataSetChanged();
+        recyclerView.setLayoutAnimation(controller);
+        recyclerView.scheduleLayoutAnimation();
     }
 }

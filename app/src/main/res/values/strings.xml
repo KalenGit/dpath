@@ -22,4 +22,5 @@
     <string name="distributives">Distributives</string>
     <string name="offered">Offered</string>
     <string name="allcourses">All Courses</string>
+    <string name="reset_ratings">Reset All Ratings</string>
 </resources>

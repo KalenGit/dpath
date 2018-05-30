@@ -90,6 +90,8 @@ public class ProfileFragment extends Fragment {
         mReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FirebaseDatabase.getInstance().getReference("Users").child("user_"+ FirebaseAuth.getInstance().getUid()).child("ratings").addChildEventListener(new RatingsChildEventListener());
+
 
             }
         });
@@ -106,5 +108,33 @@ public class ProfileFragment extends Fragment {
         });
 
 
+    }
+    class RatingsChildEventListener implements ChildEventListener {
+
+        @Override
+        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            FirebaseDatabase.getInstance().getReference().child("Users")
+                    .child("user_"+ FirebaseAuth.getInstance().getUid()).child("ratings").child(dataSnapshot.getKey()).setValue(0);
+        }
+
+        @Override
+        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+        }
+
+        @Override
+        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+        }
+
+        @Override
+        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
     }
 }
