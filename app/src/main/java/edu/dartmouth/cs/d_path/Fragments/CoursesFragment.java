@@ -86,8 +86,6 @@ public class CoursesFragment extends Fragment {
                 }
             } else {
                 courses.add(course);
-//            Course course = dataSnapshot.getValue(Course.class);
-//            courses.add(course);
             }
 
         }

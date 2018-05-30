@@ -80,15 +80,14 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             delete.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
-                    Toast.makeText(view.getContext(), "DELETED "+ courses.get(getAdapterPosition()).getCourseNumber(), Toast.LENGTH_SHORT).show();
-                    DatabaseReference ref;
-                    ref = FirebaseDatabase.getInstance().getReference("Users").child("user_"+ FirebaseAuth.getInstance().getUid()).child("recommendations");
-                    ref.child(courses.get(getAdapterPosition()).courseNumber.replace(".","-")).removeValue();
-                    delete(getAdapterPosition());
+                    if (getAdapterPosition() >=0) {
+                        Toast.makeText(view.getContext(), "DELETED "+ courses.get(getAdapterPosition()).getCourseNumber(), Toast.LENGTH_SHORT).show();
+                        delete(getAdapterPosition());
 
-                    courses.add(5, coursesRest.get(0));
-                    coursesRest.remove(0);
-                    notifyItemInserted(5);
+                        courses.add(5, coursesRest.get(0));
+                        coursesRest.remove(0);
+                        notifyItemInserted(5);
+                    }
 
 
                 }
@@ -104,6 +103,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                             .setValue(courses.get(getAdapterPosition()).getCourseNumber().replace(".","-"));
                                 }
                             });
+
 
 
 

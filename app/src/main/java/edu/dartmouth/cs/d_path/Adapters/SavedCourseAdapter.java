@@ -66,13 +66,10 @@ public class SavedCourseAdapter extends RecyclerView.Adapter<SavedCourseAdapter.
             delete.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
-                    Toast.makeText(view.getContext(), "DELETED "+ courses.get(getAdapterPosition()).getCourseNumber(), Toast.LENGTH_SHORT).show();
-
-                    DatabaseReference ref;
-                    ref = FirebaseDatabase.getInstance().getReference("Users").child("user_"+ FirebaseAuth.getInstance().getUid()).child("saved");
-                    Log.d(TAG, courses.get(getAdapterPosition()).courseNumber);
-                    ref.child(courses.get(getAdapterPosition()).courseNumber.replace(".","-")).removeValue();
-                    delete(getAdapterPosition());
+                    if (getAdapterPosition()>=0) {
+                        Toast.makeText(view.getContext(), "DELETED " + courses.get(getAdapterPosition()).getCourseNumber(), Toast.LENGTH_SHORT).show();
+                        delete(getAdapterPosition());
+                    }
 
                 }
             });

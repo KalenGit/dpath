@@ -100,7 +100,7 @@ public class CourseDescriptionActivity extends AppCompatActivity {
         ratingBar = findViewById(R.id.rating);
         btRate = findViewById(R.id.rate_button);
 
-        mCourseTitle.setText(courseNumber + "\n" +courseTitle);
+        mCourseTitle.setText(courseNumber + ":"+ "\n" +courseTitle);
         mCourseDescription.setText(courseDescription);
         mCourseInstructors.setText(courseInstructors);
         mCourseDistributives.setText(courseDistributives);
