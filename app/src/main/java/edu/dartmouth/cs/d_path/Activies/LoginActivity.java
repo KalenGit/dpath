@@ -7,7 +7,9 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -102,27 +104,53 @@ public class LoginActivity extends AppCompatActivity {
     public void onLogin(View v){
         final String email = etEmailInput.getText().toString();
         final String password = etPasswordInput.getText().toString();
-        // Sign in
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        //if login in authentification is successful
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "SIGN IN SUCCESS");
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                            finish();
-                            //if login is unsuccessful
-                        } else {
-                            Log.d(TAG, "SIGN IN FAIL");
-                            Toast.makeText(LoginActivity.this, getString(R.string.auth_fail_message), Toast.LENGTH_SHORT).show();
+        boolean hasError = checkInput(email, password);
+
+        if (!hasError) {
+            // Sign in
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            //if login in authentification is successful
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "SIGN IN SUCCESS");
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                //                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                //                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                finish();
+                                //if login is unsuccessful
+                            } else {
+                                Log.d(TAG, "SIGN IN FAIL");
+                                Toast.makeText(LoginActivity.this, getString(R.string.auth_fail_message), Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
+        }
     }
+
+    public boolean checkInput(String email, String password){
+        boolean hasError = false;
+        if (email.equals("")){
+            etEmailInput.setError(getString(R.string.field_required_error));
+            hasError = true;
+        }
+        if (password.equals("")){
+            etPasswordInput.setError(getString(R.string.field_required_error));
+            hasError = true;
+        }
+        if (password.length() < 6) {
+            etPasswordInput.setError(getString(R.string.password_length_error));
+            hasError = true;
+        }
+        if(!TextUtils.isEmpty(email) && !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            etEmailInput.setError(getString(R.string.invalid_email_error));
+            hasError = true;
+        }
+        return hasError;
+    }
+
     public void addCourses(){
         System.out.println("here");
         FirebaseDatabase

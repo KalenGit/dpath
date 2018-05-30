@@ -11,7 +11,7 @@
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
     </style>
-    <style name="TextLabel" parent="TextAppearance.AppCompat">
+    <style name="TextLabel" parent="NoActionBar">
         <!-- Hint color and label color in FALSE state -->
         <item name="android:textColorHint">@color/white</item>
         <item name="android:textSize">20sp</item>

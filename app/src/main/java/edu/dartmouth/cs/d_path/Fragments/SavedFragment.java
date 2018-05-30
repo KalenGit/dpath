@@ -56,7 +56,6 @@ public class SavedFragment extends Fragment {
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
             Log.d(TAG, "ON CHILD ADDED");
             //get course and put into arraylist
-//            Course course = dataSnapshot.getValue(Course.class);
             String courseNumber = dataSnapshot.getValue(String.class);
             Course course = CourseTableService.CourseTable.get(courseNumber);
             courses.add(course);
@@ -76,10 +75,6 @@ public class SavedFragment extends Fragment {
         //when child is removed in firebase
         public void onChildRemoved(DataSnapshot dataSnapshot) {
             Log.d(TAG, "ON CHILD REMOVED");
-
-
-
-
         }
 
         @Override
@@ -105,7 +100,6 @@ public class SavedFragment extends Fragment {
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-
 
         // specify an adapter (see also next example)
         mAdapter = new SavedCourseAdapter(this.getActivity(), courses);

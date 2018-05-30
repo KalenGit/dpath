@@ -48,13 +48,10 @@ public class CoursesFragment extends Fragment {
     public ArrayList<Course> coursesUpdated = new ArrayList<Course>();
     public ArrayList<Course> firstCoursesUpdated = new ArrayList<>();
 
-
-
-
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mEntriesRef;
 
-    private HashMap<String, Course> asdf = CourseTableService.CourseTable;
+    private HashMap<String, Course> table = CourseTableService.CourseTable;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,13 +78,13 @@ public class CoursesFragment extends Fragment {
             int courseKeyNumber = Integer.parseInt(courseKey);
 
             Course course = LoginActivity.courseTable.get(courseNumber);
-            if (courseKeyNumber< 200){
+            if (courseKeyNumber < 200){
                 if (firstCourses.size()<6) {
                     firstCourses.add(course);
                     mAdapter.notifyDataSetChanged();
                     runLayoutAnimation(mRecyclerView);
                 }
-            }else {
+            } else {
                 courses.add(course);
 //            Course course = dataSnapshot.getValue(Course.class);
 //            courses.add(course);
@@ -113,18 +110,10 @@ public class CoursesFragment extends Fragment {
                 }
             }
             if (courseKeyNumber == 200){
-                firstCourses.remove(0);
-                firstCourses.remove(0);
-                firstCourses.remove(0);
-                firstCourses.remove(0);
-                firstCourses.remove(0);
-                firstCourses.remove(0);
+                for (int i = 0; i < 6; i++){
+                    firstCourses.remove(0);
+                }
             }
-
-
-
-
-
         }
 
         @Override
@@ -132,11 +121,6 @@ public class CoursesFragment extends Fragment {
         public void onChildRemoved(DataSnapshot dataSnapshot) {
             Log.d(TAG, "ON CHILD REMOVED");
 //            Course course = dataSnapshot.getValue(Course.class);
-
-
-
-
-
         }
 
         @Override
@@ -149,23 +133,13 @@ public class CoursesFragment extends Fragment {
 
         }
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_courses, container, false);
 
     }
 
-    @Override
-    public void onResume() {
-        Log.d(TAG, "RESUME");
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        Log.d(TAG, "Puase");
-        super.onPause();
-    }
     @Override
     public void onAttachFragment(Fragment fragment) {
         Log.d(TAG, "onAttach");

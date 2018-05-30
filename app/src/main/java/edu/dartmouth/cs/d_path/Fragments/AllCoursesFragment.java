@@ -119,10 +119,7 @@ public class AllCoursesFragment extends Fragment {
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-
-
-
-
+        
         // specify an adapter (see also next example)
         mAdapter = new AllCourseAdapter(this.getActivity(), courses);
         mRecyclerView.setAdapter(mAdapter);

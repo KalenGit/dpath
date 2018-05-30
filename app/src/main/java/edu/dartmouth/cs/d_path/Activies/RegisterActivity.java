@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -76,9 +77,8 @@ public class RegisterActivity extends AppCompatActivity {
         Animation anim = AnimationUtils.loadAnimation(this, R.anim.login_animation);
         anim.setInterpolator(new AnticipateOvershootInterpolator());
         mIcon.startAnimation(anim);
-
-
     }
+
     public void checkErrors(){
         Log.d(TAG, "checkErrors");
 
@@ -87,22 +87,22 @@ public class RegisterActivity extends AppCompatActivity {
         Log.d(TAG, newEmail + " " + newPassword);
         if(TextUtils.isEmpty(newEmail)) {
             Log.d(TAG, "isEmpty");
-//            etEmail.setError("rrr");
+            etEmail.setError(getString(R.string.field_required_error));
             error = true;
         }
-//        if(TextUtils.isEmpty(newPassword)) {
-//            etPassword.setError(getString(R.string.field_required_error));
-//            error = true;
-//        }
-//        if (newPassword.length() >0 && newPassword.length() < 6) {
-//            etPassword.setError(getString(R.string.password_length_error));
-//            error = true;
-//        }if(!TextUtils.isEmpty(newEmail) && !Patterns.EMAIL_ADDRESS.matcher(newEmail).matches()) {
-//            etEmail.setError(getString(R.string.invalid_email_error));
-//            error = true;
-//        }
-
+        if(TextUtils.isEmpty(newPassword)) {
+            etPassword.setError(getString(R.string.field_required_error));
+            error = true;
+        }
+        if (newPassword.length() >0 && newPassword.length() < 6) {
+            etPassword.setError(getString(R.string.password_length_error));
+            error = true;
+        } if(!TextUtils.isEmpty(newEmail) && !Patterns.EMAIL_ADDRESS.matcher(newEmail).matches()) {
+            etEmail.setError(getString(R.string.invalid_email_error));
+            error = true;
+        }
     }
+
     public void onRegisterProfile(View v){
         checkErrors();
         Log.d(TAG, "checkedErrors");
