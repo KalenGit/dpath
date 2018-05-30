@@ -30,11 +30,7 @@ public class SavedCourseAdapter extends RecyclerView.Adapter<SavedCourseAdapter.
     private LayoutInflater inflater;
     ArrayList<Course> courses = new ArrayList<>();
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
     public class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
         TextView title;
         TextView number;
         ImageView delete;
@@ -46,7 +42,7 @@ public class SavedCourseAdapter extends RecyclerView.Adapter<SavedCourseAdapter.
             layout = itemView.findViewById(R.id.saved_course_row);
             delete = itemView.findViewById(R.id.delete_icon);
 
-
+            //onClick for course row
             layout.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
@@ -62,12 +58,13 @@ public class SavedCourseAdapter extends RecyclerView.Adapter<SavedCourseAdapter.
 
                 }
             });
-
+            //onClick to delete
             delete.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
                     if (getAdapterPosition()>=0) {
                         Toast.makeText(view.getContext(), "DELETED " + courses.get(getAdapterPosition()).getCourseNumber(), Toast.LENGTH_SHORT).show();
+                        //delete course row from recyclerview
                         delete(getAdapterPosition());
                     }
 
@@ -79,15 +76,12 @@ public class SavedCourseAdapter extends RecyclerView.Adapter<SavedCourseAdapter.
         }
     }
 
-
-    // Provide a suitable constructor (depends on the kind of dataset)
     public SavedCourseAdapter(Context context, ArrayList<Course> courses) {
         inflater = LayoutInflater.from(context);
         this.context = context;
         this.courses = courses;
     }
 
-    // Create new views (invoked by the layout manager)
     @Override
     public SavedCourseAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                        int viewType) {
@@ -97,7 +91,6 @@ public class SavedCourseAdapter extends RecyclerView.Adapter<SavedCourseAdapter.
         return holder;
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder,int position) {
         Course currentCourse = courses.get(position);
@@ -107,6 +100,7 @@ public class SavedCourseAdapter extends RecyclerView.Adapter<SavedCourseAdapter.
 
     }
 
+    //helper function to change color depending on courseMajor
     public void changeColor(ViewHolder holder, Course currentCourse){
         String courseNumb = currentCourse.getCourseNumber();
         final int sdk = android.os.Build.VERSION.SDK_INT;
@@ -149,7 +143,7 @@ public class SavedCourseAdapter extends RecyclerView.Adapter<SavedCourseAdapter.
 
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
+    // Return the size of dataset
     @Override
     public int getItemCount() {
         return courses.size();

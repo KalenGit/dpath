@@ -29,7 +29,6 @@ import edu.dartmouth.cs.d_path.Activies.MainActivity;
 import edu.dartmouth.cs.d_path.Adapters.CourseAdapter;
 import edu.dartmouth.cs.d_path.Model.Course;
 import edu.dartmouth.cs.d_path.R;
-import edu.dartmouth.cs.d_path.service.CourseTableService;
 
 /**
  * Created by jameslee on 5/24/18.
@@ -45,19 +44,17 @@ public class CoursesFragment extends Fragment {
     public static ArrayList<Course> courses = new ArrayList<Course>();
     public ArrayList<Course> firstCourses = new ArrayList<>();
 
-    public ArrayList<Course> coursesUpdated = new ArrayList<Course>();
-    public ArrayList<Course> firstCoursesUpdated = new ArrayList<>();
 
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mEntriesRef;
 
-    private HashMap<String, Course> table = CourseTableService.CourseTable;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
 
+        //firebase listener for recommendations
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mEntriesRef = mFirebaseDatabase.getReference("Users");
         mEntriesRef.child("user_"+ FirebaseAuth.getInstance().getUid()).child("recommendations").addChildEventListener(new RecommendationsChildEventListener());
@@ -77,13 +74,18 @@ public class CoursesFragment extends Fragment {
             String courseKey = dataSnapshot.getKey();
             int courseKeyNumber = Integer.parseInt(courseKey);
 
+            //get course object from hashmap in LoginActivity
             Course course = LoginActivity.courseTable.get(courseNumber);
+
+            //store first 200 courses
             if (courseKeyNumber < 200){
+                //store first 6 into firstCourses array
                 if (firstCourses.size()<6) {
                     firstCourses.add(course);
                     mAdapter.notifyDataSetChanged();
                     runLayoutAnimation(mRecyclerView);
                 }
+                //store rest into courses array
             } else {
                 courses.add(course);
             }
@@ -91,7 +93,7 @@ public class CoursesFragment extends Fragment {
         }
 
         @Override
-        //when child is updated, change in database
+        //called when algorithm updates recommended
         public void onChildChanged(DataSnapshot dataSnapshot, String s) {
             Log.d(TAG, "ON CHILD CHANGED");
             String courseNumber = dataSnapshot.getValue(String.class);
@@ -99,7 +101,10 @@ public class CoursesFragment extends Fragment {
             int courseKeyNumber = Integer.parseInt(courseKey);
 
             Course course = LoginActivity.courseTable.get(courseNumber);
+
+            //store first 200 courses
             if (courseKeyNumber < 200) {
+                //add 6 more into firstCourses array
                 if (firstCourses.size() < 12) {
                     firstCourses.add(course);
                 } else {
@@ -115,10 +120,8 @@ public class CoursesFragment extends Fragment {
         }
 
         @Override
-        //when child is removed in firebase
         public void onChildRemoved(DataSnapshot dataSnapshot) {
             Log.d(TAG, "ON CHILD REMOVED");
-//            Course course = dataSnapshot.getValue(Course.class);
         }
 
         @Override
@@ -155,6 +158,7 @@ public class CoursesFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onViewCreated");
 
+        //set up recyclerView
         mRecyclerView = view.findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mSwipeRefresh = view.findViewById(R.id.swipeRefreshLayout);
@@ -170,26 +174,12 @@ public class CoursesFragment extends Fragment {
             }
         });
 
-//
-//        if (!firstCoursesUpdated.isEmpty()){
-//            firstCourses = firstCoursesUpdated;
-//            firstCoursesUpdated.clear();
-//        }
-//        if (!coursesUpdated.isEmpty()){
-//            courses= coursesUpdated;
-//            coursesUpdated.clear();
-//        }
-        // specify an adapter (see also next example)
-        mAdapter = new CourseAdapter(this.getActivity(), firstCourses, courses); // change this back to firstcourses
+        // specify the adapter
+        mAdapter = new CourseAdapter(this.getActivity(), firstCourses, courses);
         mRecyclerView.setAdapter(mAdapter);
 
-//        // attach swipe controller to recycler view
-//        SwipeController swipeController = new SwipeController();
-//        ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeController);
-//        itemTouchhelper.attachToRecyclerView(mRecyclerView);
-
-
     }
+    //animation for recyclerView
     private void runLayoutAnimation(final RecyclerView recyclerView) {
         final Context context = recyclerView.getContext();
         final LayoutAnimationController controller =

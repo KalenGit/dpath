@@ -19,10 +19,11 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
+import edu.dartmouth.cs.d_path.Activies.LoginActivity;
 import edu.dartmouth.cs.d_path.Adapters.SavedCourseAdapter;
 import edu.dartmouth.cs.d_path.Model.Course;
 import edu.dartmouth.cs.d_path.R;
-import edu.dartmouth.cs.d_path.service.CourseTableService;
+
 
 /**
  * Created by jameslee on 5/24/18.
@@ -43,6 +44,7 @@ public class SavedFragment extends Fragment {
         Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
 
+        //firebase child listener for saved courses
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mEntriesRef = mFirebaseDatabase.getReference("Users");
         mEntriesRef.child("user_"+ FirebaseAuth.getInstance().getUid()).child("saved").addChildEventListener(new SavedChildEventListener());
@@ -57,18 +59,15 @@ public class SavedFragment extends Fragment {
             Log.d(TAG, "ON CHILD ADDED");
             //get course and put into arraylist
             String courseNumber = dataSnapshot.getValue(String.class);
-            Course course = CourseTableService.CourseTable.get(courseNumber);
+            Course course = LoginActivity.courseTable.get(courseNumber);
             courses.add(course);
             mAdapter.notifyItemInserted(courses.size()-1);
-
         }
 
         @Override
         //when child is updated, change in database
         public void onChildChanged(DataSnapshot dataSnapshot, String s) {
             Log.d(TAG, "ON CHILD CHANGED");
-
-
         }
 
         @Override
@@ -79,21 +78,20 @@ public class SavedFragment extends Fragment {
 
         @Override
         public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
         }
 
         @Override
         public void onCancelled(DatabaseError databaseError) {
-
         }
     }
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_saved, container, false);
 
     }
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-
+        //set up recyclerView
         mRecyclerView = view.findViewById(R.id.my_saved_recycler_view);
         mRecyclerView.setHasFixedSize(true);
 
@@ -101,7 +99,7 @@ public class SavedFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        // specify an adapter (see also next example)
+        // specify the adapter
         mAdapter = new SavedCourseAdapter(this.getActivity(), courses);
         mRecyclerView.setAdapter(mAdapter);
     }

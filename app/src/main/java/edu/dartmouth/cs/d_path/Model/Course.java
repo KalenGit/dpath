@@ -4,6 +4,7 @@ package edu.dartmouth.cs.d_path.Model;
  * Created by jameslee on 5/25/18.
  */
 
+
 public class Course {
     public String courseNumber;
     public String title;

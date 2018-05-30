@@ -56,6 +56,8 @@ public class ProfileFragment extends Fragment {
         mMajor = view.findViewById(R.id.profile_major);
         mReset = view.findViewById(R.id.reset_preference_button);
         mSignOut = view.findViewById(R.id.sign_out_button);
+
+        //retrieve user email from firebase
         FirebaseDatabase.getInstance().getReference("Users").child("user_"+ FirebaseAuth.getInstance().getUid()).child("email").addListenerForSingleValueEvent(new ValueEventListener(){
 
             @Override
@@ -71,6 +73,7 @@ public class ProfileFragment extends Fragment {
 
             }
         });
+        //retrieve user major from firebase
         FirebaseDatabase.getInstance().getReference("Users").child("user_"+ FirebaseAuth.getInstance().getUid()).child("major").addListenerForSingleValueEvent(new ValueEventListener(){
 
             @Override
@@ -86,21 +89,21 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-
+        //onClick listener to reset all ratings
         mReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //reset all ratings to 0
                 FirebaseDatabase.getInstance().getReference("Users").child("user_"+ FirebaseAuth.getInstance().getUid()).child("ratings").addChildEventListener(new RatingsChildEventListener());
 
 
             }
         });
-
+        //onClick listener to sign out
         mSignOut.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 FirebaseAuth.getInstance().signOut();
-
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 getActivity().finish();

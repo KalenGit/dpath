@@ -82,30 +82,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void createCourseTable(){
-        courseTable = new HashMap<>();
-        FirebaseDatabase
-                .getInstance()
-                .getReference("Courses")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot data : dataSnapshot.getChildren()){
-                            Course course = data.getValue(Course.class);
-                            courseTable.put(course.getCourseNumber().replace(".", "-"), course);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-    }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        //go back to login screen and sign out
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();

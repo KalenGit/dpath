@@ -36,11 +36,9 @@ public class RegisterActivity extends AppCompatActivity {
     TextInputEditText etPassword;
     Button btRegister;
     ImageView mIcon;
-
     UserProfile newUser;
 
-
-    String[] majors= new String[] {"Biology", "Computer Science", "Engineering Sciences", "Economics", "Government", "History",};
+    String[] majors= new String[] {"Biology", "Computer Science", "Engineering Sciences", "Economics", "Government", "History"};
     private FirebaseAuth mAuth;
     private FirebaseDatabase mFirebaseDatabase;
     private Boolean error = false;
@@ -67,18 +65,19 @@ public class RegisterActivity extends AppCompatActivity {
         btRegister = findViewById(R.id.register_button2);
         mIcon = findViewById(R.id.icon_register);
 
+        //set up spinner
         majorSpinner = findViewById(R.id.major_register);
         ArrayAdapter<String> inputAdapter = new ArrayAdapter<String>(this, R.layout.item_spinner, majors);
         majorSpinner.setAdapter(inputAdapter);
-
         majorSpinner.getBackground().setColorFilter(getResources().getColor(R.color.registerColor),
                 PorterDuff.Mode.SRC_ATOP);
 
+        //animation start for icon
         Animation anim = AnimationUtils.loadAnimation(this, R.anim.login_animation);
         anim.setInterpolator(new AnticipateOvershootInterpolator());
         mIcon.startAnimation(anim);
     }
-
+    //helper function to check text input errors
     public void checkErrors(){
         Log.d(TAG, "checkErrors");
 
@@ -102,7 +101,7 @@ public class RegisterActivity extends AppCompatActivity {
             error = true;
         }
     }
-
+    //onclick function for register button
     public void onRegisterProfile(View v){
         checkErrors();
         Log.d(TAG, "checkedErrors");
@@ -148,7 +147,6 @@ public class RegisterActivity extends AppCompatActivity {
                                 Log.w(TAG, "createUserWithEmail:failure", task.getException());
                                 Toast.makeText(RegisterActivity.this, "Authentication failed",
                                         Toast.LENGTH_LONG).show();
-                                //
                             }
                         }
                     });

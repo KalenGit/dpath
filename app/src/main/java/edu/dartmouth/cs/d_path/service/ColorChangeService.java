@@ -18,6 +18,7 @@ public class ColorChangeService {
         this.context = context;
     }
 
+    //change color of course row depending on Major
     public void changeColor(AllCourseAdapter.ViewHolder holder, Course currentCourse){
         String courseNumb = currentCourse.getCourseNumber();
         final int sdk = android.os.Build.VERSION.SDK_INT;

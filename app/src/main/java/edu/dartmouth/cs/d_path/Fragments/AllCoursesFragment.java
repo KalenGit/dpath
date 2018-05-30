@@ -46,13 +46,12 @@ public class AllCoursesFragment extends Fragment {
 
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mEntriesRef;
-//    public HashMap<String, Course> allCourses = new HashMap<>();
-
 
     public void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
 
+        //add child listener to Courses in Firebase
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mEntriesRef = mFirebaseDatabase.getReference("Courses");
         mEntriesRef.addChildEventListener(new AllCoursesChildEventListener());
@@ -63,13 +62,12 @@ public class AllCoursesFragment extends Fragment {
     class AllCoursesChildEventListener implements ChildEventListener {
 
         @Override
-        //when child is added in firebase
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
             Log.d(TAG, "ON CHILD ADDED");
             //get course and put into arraylist
             Course course = dataSnapshot.getValue(Course.class);
-//            allCourses.put(course.getCourseNumber(), course);
             courses.add(course);
+            //animaiton for loading courses
             runLayoutAnimation(mRecyclerView);
 
         }
@@ -86,11 +84,6 @@ public class AllCoursesFragment extends Fragment {
         //when child is removed in firebase
         public void onChildRemoved(DataSnapshot dataSnapshot) {
             Log.d(TAG, "ON CHILD REMOVED");
-            Course course = dataSnapshot.getValue(Course.class);
-
-
-
-
 
         }
 
@@ -113,6 +106,8 @@ public class AllCoursesFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //set up recyclerView
         mRecyclerView = view.findViewById(R.id.recycler_all_courses);
         mRecyclerView.setHasFixedSize(true);
 
@@ -120,11 +115,12 @@ public class AllCoursesFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         
-        // specify an adapter (see also next example)
+        // specify the adapter
         mAdapter = new AllCourseAdapter(this.getActivity(), courses);
         mRecyclerView.setAdapter(mAdapter);
     }
 
+    //animation for the recycler view
     private void runLayoutAnimation(final RecyclerView recyclerView) {
         final Context context = recyclerView.getContext();
         final LayoutAnimationController controller =

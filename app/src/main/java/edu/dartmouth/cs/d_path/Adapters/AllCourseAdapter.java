@@ -38,11 +38,7 @@ public class AllCourseAdapter extends RecyclerView.Adapter<AllCourseAdapter.View
     private LayoutInflater inflater;
     ArrayList<Course> courses = new ArrayList<>();
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
     public class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
         TextView title;
         TextView number;
         ImageView save;
@@ -54,10 +50,11 @@ public class AllCourseAdapter extends RecyclerView.Adapter<AllCourseAdapter.View
             layout = itemView.findViewById(R.id.all_course_row);
             save = itemView.findViewById(R.id.child_save_icon);
 
-
+            //onClick listener for each row
             layout.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
+                    //store course data from intent and start activity
                     Intent intent = new Intent(context, CourseDescriptionActivity.class);
                     intent.putExtra("course_number",courses.get(getAdapterPosition()).courseNumber);
                     intent.putExtra("course_description", courses.get(getAdapterPosition()).description);
@@ -70,10 +67,12 @@ public class AllCourseAdapter extends RecyclerView.Adapter<AllCourseAdapter.View
                 }
             });
 
+            //onClick listener for save
             save.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
                     Toast.makeText(view.getContext(), "SAVED "+ courses.get(getAdapterPosition()).getCourseNumber(), Toast.LENGTH_SHORT).show();
+                    //save to firebase
                     FirebaseDatabase.getInstance().getReference().child("Users")
                             .child("user_" + FirebaseAuth.getInstance().getUid()).child("saved")
                             .child(courses.get(getAdapterPosition()).getCourseNumber()
@@ -96,14 +95,12 @@ public class AllCourseAdapter extends RecyclerView.Adapter<AllCourseAdapter.View
     }
 
 
-    // Provide a suitable constructor (depends on the kind of dataset)
     public AllCourseAdapter(Context context, ArrayList<Course> courses) {
         inflater = LayoutInflater.from(context);
         this.context = context;
         this.courses = courses;
     }
 
-    // Create new views (invoked by the layout manager)
     @Override
     public AllCourseAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                             int viewType) {
@@ -113,7 +110,7 @@ public class AllCourseAdapter extends RecyclerView.Adapter<AllCourseAdapter.View
         return holder;
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
+    // Replace the contents of a view
     @Override
     public void onBindViewHolder(ViewHolder holder,int position) {
         ColorChangeService colorChangeService = new ColorChangeService(context);
@@ -124,56 +121,10 @@ public class AllCourseAdapter extends RecyclerView.Adapter<AllCourseAdapter.View
 
     }
 
-    public void changeColor(ViewHolder holder, Course currentCourse){
-        String courseNumb = currentCourse.getCourseNumber();
-        final int sdk = android.os.Build.VERSION.SDK_INT;
-        int drawable = 0;
-        int color = 0;
 
-
-        if (courseNumb.contains("ECON")){
-            drawable = R.drawable.recycler_shape2;
-            color = R.color.darkGreen;
-
-        } else if (courseNumb.contains("BIOL")){
-            drawable = R.drawable.recycler_shape2_orange;
-            color = R.color.darkOrange;
-
-        } else if(courseNumb.contains("COSC")){
-            drawable = R.drawable.recycler_shape2_blue;
-            color = R.color.darkBlue;
-
-        } else if (courseNumb.contains("HIST")) {
-            drawable = R.drawable.recycler_shape2_red;
-            color = R.color.darkRed;
-
-        } else if(courseNumb.contains("GOVT")){
-            drawable = R.drawable.recycler_shape2_turq;
-            color = R.color.darkTurq;
-
-        } else if(courseNumb.contains("ENGS")) {
-            drawable = R.drawable.recycler_shape2_purple;
-            color = R.color.darkPurple;
-        }
-
-        if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-            holder.number.setBackgroundDrawable(ContextCompat.getDrawable(context, drawable) );
-        } else {
-            holder.number.setBackground(ContextCompat.getDrawable(context, drawable));
-        }
-        holder.number.setTextColor(ContextCompat.getColor(context, color));
-        holder.title.setTextColor(ContextCompat.getColor(context, color));
-
-    }
-
-    // Return the size of your dataset (invoked by the layout manager)
+    // Return the size of dataset
     @Override
     public int getItemCount() {
         return courses.size();
-    }
-
-    public void delete(int position){
-        courses.remove(position);
-        notifyItemRemoved(position);
     }
 }

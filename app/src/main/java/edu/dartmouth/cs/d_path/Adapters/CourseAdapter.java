@@ -40,11 +40,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     ArrayList<Course> courses = new ArrayList<>();
     ArrayList<Course> coursesRest = new ArrayList<>();
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
     public class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
         TextView title;
         TextView number;
         ImageView delete;
@@ -59,7 +55,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             save = itemView.findViewById(R.id.save_icon);
 
 
-
+            //onClick listener for course row
             layout.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
@@ -76,14 +72,15 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
                 }
             });
-
+            //onClick listener to delete
             delete.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
                     if (getAdapterPosition() >=0) {
                         Toast.makeText(view.getContext(), "DELETED "+ courses.get(getAdapterPosition()).getCourseNumber(), Toast.LENGTH_SHORT).show();
+                        //delete course from recyclerview
                         delete(getAdapterPosition());
-
+                        //add course to recycler view
                         courses.add(5, coursesRest.get(0));
                         coursesRest.remove(0);
                         notifyItemInserted(5);
@@ -92,10 +89,12 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
                 }
             });
+            //onClick to save
             save.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
                     Toast.makeText(view.getContext(), "SAVED "+ courses.get(getAdapterPosition()).getCourseNumber(), Toast.LENGTH_SHORT).show();
+                    //save to firebase
                     FirebaseDatabase.getInstance().getReference().child("Users")
                             .child("user_" + FirebaseAuth.getInstance().getUid()).child("saved")
                             .child(courses.get(getAdapterPosition()).getCourseNumber()
@@ -111,7 +110,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         }
 
 
-    // Provide a suitable constructor (depends on the kind of dataset)
     public CourseAdapter(Context context, ArrayList<Course> courses, ArrayList<Course> courseRest) {
         inflater = LayoutInflater.from(context);
         this.context = context;
@@ -119,7 +117,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         this.coursesRest = courseRest;
     }
 
-    // Create new views (invoked by the layout manager)
     @Override
     public CourseAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int viewType) {
@@ -137,10 +134,9 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             holder.title.setText(currentCourse.title);
             holder.number.setText(currentCourse.courseNumber);
         }
-        Log.d(TAG, "onBind");
-
         changeColor(holder, currentCourse);
     }
+    //helper function to change color of course row depending on major
     public void changeColor(ViewHolder holder, Course currentCourse){
         String courseNumb = currentCourse.getCourseNumber();
         final int sdk = android.os.Build.VERSION.SDK_INT;

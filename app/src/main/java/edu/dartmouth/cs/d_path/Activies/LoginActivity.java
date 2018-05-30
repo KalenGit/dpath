@@ -67,12 +67,9 @@ public class LoginActivity extends AppCompatActivity {
         btRegister = findViewById(R.id.register_button);
         mIcon = findViewById(R.id.icon_login);
 
+        //animation start for icon
         Animation anim = AnimationUtils.loadAnimation(this, R.anim.login_animation);
         anim.setInterpolator(new AnticipateOvershootInterpolator());
-//        btLogin.startAnimation(anim);
-//        btRegister.startAnimation(anim);
-//        etPasswordInput.startAnimation(anim);
-//        etEmailInput.startAnimation(anim);
         mIcon.startAnimation(anim);
 
     }
@@ -82,19 +79,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         addCourses();
 
-        // Check if user is signed in automatically go to main activity
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-//        updateUI(currentUser);
     }
 
-    public void updateUI(FirebaseUser user){
-        if (user!=null){
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            finish();
-
-        }
-    }
     //clicking register button
     public void onRegister(View v){
         Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
@@ -116,8 +102,6 @@ public class LoginActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 Log.d(TAG, "SIGN IN SUCCESS");
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                //                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                //                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
                                 finish();
                                 //if login is unsuccessful
@@ -129,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
                     });
         }
     }
-
+    //helper function to check text input errors
     public boolean checkInput(String email, String password){
         boolean hasError = false;
         if (email.equals("")){
@@ -150,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         return hasError;
     }
-
+    //helper function to add all courses from firebase
     public void addCourses(){
         System.out.println("here");
         FirebaseDatabase
